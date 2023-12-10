@@ -1,91 +1,112 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
-<%@ page import="model.bean.User" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>User List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-   	<script>
-	    function confirmDelete() {
-	        return confirm("Bạn có chắc chắn muốn xóa User này?");
-	    }
-	</script>
-	
+    <title>Login</title>
     <style>
-        .search-box {
-            text-align: right;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2e59d9d1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+		.loginPage{
+			display:flex;
+			border: 1px solid #ccc;
+    		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    		border-radius:10px;
+		}
+        form {
+        	display:flex;
+        	flex-direction: column;
+        	width:400px;
+            background-color: #fff;
+            padding: 38px;
+            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-top-right-radius: 10px;
+	        border-bottom-right-radius: 10px;
+        }
+        form h2,form p{
+        	font-style: italic;
+        }
+        form h2{
+        	font-size:24px;
+        }
+        form p{
+        	font-size:20px;
+        }
+		.imgLogin{
+	        width: 440px;
+	        height: 576px;
+	        border-top-left-radius: 10px;
+	        border-bottom-right-radius: 10px;
+	    }
+	    .imgLogin img{
+	        width: 100%;
+	        height: 576px;
+	        object-fit: cover;
+	        border-top-left-radius: 10px;
+	        border-bottom-left-radius:10px;
+	    }
+	    
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #2e59d9da;
+            color: white;
+            padding: 10px 15px;
+            margin: 16px 0;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            height:40px;
+        }
+
+        button:hover {
+            background-color: #2e59d9;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            display: block;
+            width: 100%;
+            height:40px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 999px;
         }
     </style>
-    
 </head>
-
-<body>	
-	<header>
-        <nav class="navbar navbar-expand-md navbar-dark" style="background-color: blue">
-            <div>
-                <p class="navbar-brand"> Quản lý User  </p>
-            </div>
-
-            <ul class="navbar-nav">
-                <li><a href="UserServlet?action=list" class="nav-link">Users</a></li>
-            </ul>
-        </nav>
-    </header>
-    <br>
-
-    <div class="row">
-
-        <div class="container">
-            <h3 align="center">List of Users</h3>
-            <hr>
-		    <div class="search-box" >
-		        <form action="UserServlet?action=list" method="get" class="form-inline">
-		            <input type="hidden" name="action" value="search">
-		            <div class="form-group mx-sm-3 mb-2">
-		                <input type="text" class="form-control" name="searchKeyword" placeholder="Search">
-		            </div>
-		            <button type="submit" class="btn btn-primary mb-2">Search</button>
-		        </form>
-		    </div>
-            <br>
-            <table class="table table-bordered">
-                <thead>
-		            <tr>
-		                <th class="col-2">User ID</th>
-		                <th class="col-4">Username</th>
-		                <th class="col-2">Password</th>
-		                <th class="col-2">Delete</th>
-		            </tr>
-		        </thead>
-                <tbody>
-	                <% 
-			        List<User> listUser = (ArrayList<User>) request.getAttribute("listUser"); 
-			        
-			        if (listUser == null || listUser.isEmpty()) {	        	
-			        	response.sendRedirect("UserServlet?action=list");
-			        } else {
-			            for (int i = 0; i < listUser.size(); i++) { 
-			        %> 
-                        <tr>
-                            <td><%= listUser.get(i).getUserID() %></td>
-                            <td><%= listUser.get(i).getUsername() %></td>
-                            <td><%= listUser.get(i).getPassword() %></td>
-
-                            <td>
-                                <a href="UserServlet?action=delete&userid=<%= listUser.get(i).getUserID() %>" onclick="return confirmDelete()">Delete</a>
-                            </td>
-                        </tr>
-                    <% 
-	                    } 
-				    }
-                    %>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<body>
+	<div class="loginPage">
+		<div class="imgLogin">
+    		<img src="https://tenkujapan.vn/wp-content/uploads/2020/02/46Tenku_3226.jpg" >
+    	</div>
+    	<form action="" method="post">	
+    		<h2>Chào mừng trở lại</h2>
+    		<p>Hãy đăng nhập tài khoản của bạn</p>
+       	 	<input type="text" name="username" placeholder="Tài khoản" />
+        	<input type="password" name="password" placeholder="Mật khẩu" />
+        	<button type="submit" value="Login">Login</button>
+        	<p>Nếu bạn chưa có tài khoản hãy đăng ký</p>
+    	</form>
+	</div>
+	
 </body>
 </html>
